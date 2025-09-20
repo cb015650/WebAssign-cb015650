@@ -1,0 +1,130 @@
+/* Common Page Header */
+.page-header {
+    background: #fff;
+    padding: 2rem; /* Increased top padding */
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2.5rem; 
+}
+
+/* Main Title */
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2E5E4E; /* deep green */
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Subtitle */
+.page-header .subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+/* Accent underline */
+.page-header h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #56B88B, #4DB6AC);
+    margin: 0.75rem auto 0;
+    border-radius: 2px;
+}
+.workout-page {
+    background:  url('../images/workout.jpg') center center/cover no-repeat;
+    padding: 4rem 1rem 4rem 1rem; /* Increased top padding */
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    
+
+}
+.workout-page h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #ffffff; 
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    
+}
+.workout-page .subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    background-color: #ffffffc7;
+    margin-bottom: 2.1rem;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    
+}
+.workout-page h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #56B88B, #4DB6AC);
+    margin: 0.75rem auto 0;
+    border-radius: 2px;
+}
+.contact-form {
+    background:  #ffffff;
+    padding: 6rem 1rem 4rem 1rem; /* Increased top padding */
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    
+}
+
+.bg-video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.95; /* optional for overlay effect */
+    pointer-events: none; /* so content is clickable */
+}
+.page-description-recipes {
+    font-size: 1.2rem;
+    color: #303030;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+   
+    margin-bottom: 2.1rem;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+}  
+.page-header-recipes {
+
+    padding: 5rem; /* Increased top padding */
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2.5rem; 
+}
+.page-header-recipes h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #214237; /* deep green */
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}

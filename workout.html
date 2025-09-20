@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate custom workout plans - GreenBite">
+    <title>Workout Generator - GreenBite</title>
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+<link rel="manifest" href="favicon/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="images/logo.png" alt="GreenBite Logo" style="height:60px; width:60px; vertical-align:middle; margin-right:12px; border-radius: 10px; border-color: rgb(1, 27, 1); ">
+                <a href="index.html">GreenBite</a>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="calculator.html">Calorie Calculator</a></li>
+                <li><a href="workout.html" class="active">Workout Generator</a></li>
+                <li><a href="mindfulness.html">Mindfulness</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Workout Generator Section -->
+    <section class="workout-page">
+        <div class="container">
+            <h1>Workout Generator</h1>
+            <p class="subtitle">Create a personalized workout plan based on your preferences</p>
+
+            <div class="workout-container">
+                <form id="workoutForm" class="workout-form">
+                    <div class="form-group">
+                        <label>Select Body Part(s)</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="bodyPart" value="arms">
+                                <span>Arms</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="bodyPart" value="legs">
+                                <span>Legs</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="bodyPart" value="chest">
+                                <span>Chest</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="bodyPart" value="back">
+                                <span>Back</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="bodyPart" value="core">
+                                <span>Core</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="bodyPart" value="fullbody">
+                                <span>Full Body</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="equipment">Equipment Available</label>
+                        <select id="equipment" required>
+                            <option value="">Select Equipment</option>
+                            <option value="none">No Equipment</option>
+                            <option value="dumbbells">Dumbbells</option>
+                            <option value="resistance">Resistance Bands</option>
+                            <option value="gym">Full Gym</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-button">Generate Workout</button>
+                </form>
+
+                <!-- Workout Display -->
+                <div id="workoutPlan" class="workout-plan" style="display: none;">
+                    <h2>Your Workout Plan</h2>
+                    <div id="exerciseList" class="exercise-list">
+                        <!-- Exercises will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Timer Display -->
+                <div id="timerSection" class="timer-section" style="display: none;">
+                    <h3 id="currentExercise">Exercise Name</h3>
+                    <div class="timer-display">
+                        <div class="timer-circle">
+                            <svg width="200" height="200">
+                                <circle cx="100" cy="100" r="90" fill="none" stroke="#e0e0e0" stroke-width="10"/>
+                                <circle id="timerProgress" cx="100" cy="100" r="90" fill="none" stroke="#4CAF50" stroke-width="10"
+                                        stroke-dasharray="565.48" stroke-dashoffset="565.48" transform="rotate(-90 100 100)"/>
+                            </svg>
+                            <div class="timer-text" id="timerText">00:00</div>
+                        </div>
+                    </div>
+                    <div class="timer-controls">
+                        <button id="startTimer" class="timer-button">Start</button>
+                        <button id="pauseTimer" class="timer-button" style="display: none;">Pause</button>
+                        <button id="resetTimer" class="timer-button">Reset</button>
+                        <button id="nextExercise" class="timer-button">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="images/logo.png" alt="GreenBite Logo" style="height:60px; width:60px; vertical-align:middle; margin-right:12px; border-radius: 10px; border-color: rgb(1, 27, 1); ">
+                    <h3>GreenBite</h3>
+                    <p>Your partner in healthy living</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="recipes.html">Recipes</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="workout.html">Workouts</a></li>
+                        <li><a href="mindfulness.html">Mindfulness</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="https://www.who.int/initiatives/behealthy/healthy-diet" target="_blank" rel="noopener" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="https://www.who.int/initiatives/behealthy/healthy-diet" target="_blank" rel="noopener" class="footer-link">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GreenBite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
