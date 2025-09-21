@@ -1128,15 +1128,20 @@ document.addEventListener('DOMContentLoaded', function() {
             initContactPage();
             break;
     }
+    // Remove any empty button
     document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', function() {
-            if (this.type === 'submit' || this.classList.contains('submit-button')) {
+        if (!button.textContent.trim() && button.children.length === 0) {
+            button.parentNode.removeChild(button);
+            return;
+        }
+        if (button.type === 'submit' || button.classList.contains('submit-button')) {
+            button.addEventListener('click', function() {
                 this.classList.add('loading');
                 setTimeout(() => {
                     this.classList.remove('loading');
                 }, 2000);
-            }
-        });
+            });
+        }
     });
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {

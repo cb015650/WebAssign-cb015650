@@ -587,7 +587,7 @@ input:invalid {
 }
 
 .footer-section h3, .footer-section h4 {
-    color: var(--primary-green);
+    color: #f7f7f7;
     margin-bottom: var(--spacing-md);
 }
 
@@ -1697,6 +1697,77 @@ contact-details p {
         padding: 0.5rem 0.75rem;
         font-size: 0.98rem;
     }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 4px;
+    }
+    .hero-content {
+        margin-top: 60px;
+    }
+    .hero-main-title {
+        font-size: 2rem;
+    }
+    .health-tips h2,
+    .newsletter h2 {
+        font-size: 2rem;
+    }
+    .tip-card {
+        padding: 1rem;
+    }
+    .featured h2 {
+        font-size: 1.5rem;
+    }
+    .feature-card {
+        padding: var(--spacing-md);
+    }
+    .newsletter {
+        padding: 20px 4px;
+        height: auto;
+    }
+    .faq-section {
+        width: 100%;
+        margin-left: 0;
+        padding: var(--spacing-md);
+    }
+    .modal-content {
+        padding: var(--spacing-md);
+    }
+    .calculator-page,
+    .workout-page,
+    .mindfulness-page,
+    .recipes-page,
+    .contact-page {
+        padding: var(--spacing-md) 0;
+        border-radius: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/* Ensure grids stack on small screens */
+@media (max-width: 650px) {
+    .feature-grid,
+    .session-stats,
+    .recipe-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    .mindfulness-sections-row {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
+
+/* Make sure .container never overflows */
+.container {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* ===== UTILITY CLASSES ===== */
