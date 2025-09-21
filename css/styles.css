@@ -1308,16 +1308,7 @@ backdrop-filter: blur(5px);
     box-shadow: var(--shadow-heavy);
 }
 
-/* .recipe-image {
-    width: 100%;
-    height: 200px;
-    background: var(--medium-gray);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    color: var(--text-light);
-} */
+
 .recipe-image {
     height: 180px; /* Fixed height for all image containers */
     overflow: hidden; /* Hides any part of the image that overflows */
@@ -1674,54 +1665,37 @@ contact-details p {
     }
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: 0 var(--spacing-xs);
+/* Fix for mobile view: make .search-input and .category-filter normal height/buttons on recipes page */
+@media (max-width: 768px) {
+    .recipe-controls {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: stretch;
     }
-    
-    .hero {
-        padding: var(--spacing-xl) var(--spacing-sm);
-    }
-    
-    .hero-title {
-        font-size: 1.75rem;
-    }
-    
-    .cta-button {
-        padding: var(--spacing-sm) var(--spacing-lg);
+    .search-input,
+    .category-filter {
+        max-width: 100%;
+        width: 100%;
+        min-width: 0;
         font-size: 1rem;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        margin-bottom: var(--spacing-sm);
+        box-sizing: border-box;
+        height: auto;
     }
-    
-    .feature-card,
-    .calculator-form,
-    .workout-form,
-    .contact-form-section,
-    .contact-info-section,
-    .mindfulness-section,
-    .workout-plan,
-    .timer-section {
-        padding: var(--spacing-lg);
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
     }
-    
-    .breathing-circle {
-        width: 150px;
-        height: 150px;
-    }
-    
-    .meditation-time {
-        font-size: 2rem;
-    }
-    
-    .timer-text {
-        font-size: 1.5rem;
-    }
-    
-    .sounds-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .checkbox-group {
-        grid-template-columns: 1fr;
+}
+
+/* Optional: further reduce padding for very small screens */
+@media (max-width: 480px) {
+    .search-input,
+    .category-filter {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.98rem;
     }
 }
 
