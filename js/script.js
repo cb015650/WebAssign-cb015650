@@ -10,37 +10,30 @@ const healthTips = [
     {
         title: "Stay Hydrated",
         content: "Drink at least 8 glasses of water daily to maintain optimal body function and healthy skin.",
-        // icon: "💧"
     },
     {
         title: "Get Moving",
         content: "Aim for at least 30 minutes of moderate exercise daily to boost energy and mood.",
-        // icon: "🏃‍♂️"
     },
     {
         title: "Eat Rainbow Colors",
         content: "Include colorful fruits and vegetables in your diet for a variety of nutrients.",
-        // icon: "🌈"
     },
     {
         title: "Sleep Well",
         content: "Get 7-9 hours of quality sleep each night for better physical and mental health.",
-        // icon: "😴"
     },
     {
         title: "Practice Gratitude",
         content: "Take a few minutes each day to appreciate what you have for better mental wellbeing.",
-        // icon: "🙏"
     },
     {
         title: "Take Deep Breaths",
         content: "Practice deep breathing exercises to reduce stress and improve focus.",
-        // icon: "🧘‍♀️"
     },
     {
         title: "Connect with Nature",
         content: "Spend time outdoors daily to reduce stress and boost vitamin D levels.",
-        // icon: "🌱"
     }
 ];
 
@@ -228,7 +221,6 @@ const recipesData = [
                     carbs: 40,
                     fat: 16,
                     fiber: 10
-                   
                 }
 
             },
@@ -418,7 +410,6 @@ function animateNumber(element, target, duration = 1000) {
     const start = 0;
     const increment = target / (duration / 16);
     let current = start;
-
     const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
@@ -433,19 +424,14 @@ function animateNumber(element, target, duration = 1000) {
 function showMessage(elementId, message, type = 'success', duration = 3000) {
     const element = document.getElementById(elementId);
     if (!element) return;
-
     element.textContent = message;
     element.className = `message ${type}`;
     element.style.display = 'block';
     element.style.opacity = '0';
-    
-    // Fade in
     setTimeout(() => {
         element.style.transition = 'opacity 0.3s ease';
         element.style.opacity = '1';
     }, 10);
-
-    // Fade out after duration
     setTimeout(() => {
         element.style.opacity = '0';
         setTimeout(() => {
@@ -487,22 +473,17 @@ function loadFromStorage(key, defaultValue = null) {
 function initNavigation() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
-    
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
             }
         });
-
-        // Close menu when clicking on links
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -510,19 +491,13 @@ function initNavigation() {
             });
         });
     }
-
-    // Navbar scroll effect
     let lastScrollTop = 0;
     const navbar = document.querySelector('.navbar');
-    
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
         if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling down
             navbar.style.transform = 'translateY(-100%)';
         } else {
-            // Scrolling up
             navbar.style.transform = 'translateY(0)';
         }
         lastScrollTop = scrollTop;
@@ -532,56 +507,41 @@ function initNavigation() {
 // ===== HOME PAGE FUNCTIONALITY =====
 
 function initHomePage() {
-    // Auto-rotating hero slogans
     const heroSloganElement = document.getElementById('heroSlogan');
     if (heroSloganElement) {
         let currentSloganIndex = 0;
-        
         function rotateSlogan() {
             heroSloganElement.style.opacity = '0';
-            
             setTimeout(() => {
                 currentSloganIndex = (currentSloganIndex + 1) % heroSlogans.length;
                 heroSloganElement.textContent = heroSlogans[currentSloganIndex];
                 heroSloganElement.style.opacity = '1';
             }, 300);
         }
-        
-        // Rotate every 4 seconds
         setInterval(rotateSlogan, 4000);
     }
-
-    // Daily health tip
     const tipTitle = document.getElementById('tipTitle');
     const tipContent = document.getElementById('tipContent');
     const tipIcon = document.querySelector('.tip-icon');
-    
     if (tipTitle && tipContent && tipIcon) {
         const today = new Date();
         const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
         const tipIndex = dayOfYear % healthTips.length;
         const todaysTip = healthTips[tipIndex];
-        
         tipTitle.textContent = todaysTip.title;
         tipContent.textContent = todaysTip.content;
         tipIcon.textContent = todaysTip.icon;
     }
-
-    // Newsletter subscription
     const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
             const emailInput = document.getElementById('newsletterEmail');
             const email = emailInput.value.trim();
-            
             if (!isValidEmail(email)) {
                 showMessage('newsletterMessage', 'Please enter a valid email address.', 'error');
                 return;
             }
-            
-            // Save email to localStorage
             const subscribers = loadFromStorage('newsletterSubscribers', []);
             if (!subscribers.includes(email)) {
                 subscribers.push(email);
@@ -604,10 +564,7 @@ function initRecipesPage() {
     const modal = document.getElementById('recipeModal');
     const modalBody = document.getElementById('modalBody');
     const closeModal = document.querySelector('.close');
-    
     if (!recipeGrid) return;
-
-    // Display recipes
     function displayRecipes(recipes) {
         recipeGrid.innerHTML = recipes.map(recipe => {
             let imageHtml = '';
@@ -631,776 +588,585 @@ function initRecipesPage() {
             `;
         }).join('');
     }
-
-    // Filter recipes
     function filterRecipes() {
         const searchTerm = searchInput?.value.toLowerCase() || '';
         const selectedCategory = categoryFilter?.value || 'all';
-        
         const filtered = recipesData.filter(recipe => {
             const matchesSearch = recipe.title.toLowerCase().includes(searchTerm) ||
                                 recipe.description.toLowerCase().includes(searchTerm);
             const matchesCategory = selectedCategory === 'all' || recipe.category === selectedCategory;
-            
             return matchesSearch && matchesCategory;
         });
-        
         displayRecipes(filtered);
     }
-
-    // Open recipe modal
     window.openRecipeModal = function(recipeId) {
         const recipe = recipesData.find(r => r.id === recipeId);
         if (!recipe || !modalBody) return;
-
-    modalBody.innerHTML = `
-        <h2>${recipe.title}</h2>
-        <div class="recipe-meta">
-            <span> ⏱ ${recipe.prepTime}</span>
-            <span> | ${recipe.servings} servings</span>
-            <span> | ${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}</span>
-        </div>
-        
-        <div class="recipe-ingredients">
-            <h3>Ingredients</h3>
-            <ul>
-                ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
-            </ul>
-        </div>
-        
-        <div class="recipe-instructions">
-            <h3>Instructions</h3>
-            <ol>
-                ${recipe.instructions.map(instruction => `<li>${instruction}</li>`).join('')}
-            </ol>
-        </div>
-        
-        <div class="recipe-nutrition">
-            <h3>Nutrition Information (per serving)</h3>
-            <table class="nutrition-table">
-                <tr>
-                    <th>Calories</th>
-                    <td>${recipe.nutrition.calories}</td>
-                </tr>
-                <tr>
-                    <th>Protein</th>
-                    <td>${recipe.nutrition.protein}</td>
-                </tr>
-                <tr>
-                    <th>Carbohydrates</th>
-                    <td>${recipe.nutrition.carbs}</td>
-                </tr>
-                <tr>
-                    <th>Fat</th>
-                    <td>${recipe.nutrition.fat}</td>
-                </tr>
-                <tr>
-                    <th>Fiber</th>
-                    <td>${recipe.nutrition.fiber}</td>
-                </tr>
-            </table>
-        </div>
-    `;
-    
-    modal.style.display = 'block';
-};
-
-// Close modal
-if (closeModal) {
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
-
-// Close modal when clicking outside
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
+        modalBody.innerHTML = `
+            <h2>${recipe.title}</h2>
+            <div class="recipe-meta">
+                <span> ⏱ ${recipe.prepTime}</span>
+                <span> | ${recipe.servings} servings</span>
+                <span> | ${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}</span>
+            </div>
+            <div class="recipe-ingredients">
+                <h3>Ingredients</h3>
+                <ul>
+                    ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+                </ul>
+            </div>
+            <div class="recipe-instructions">
+                <h3>Instructions</h3>
+                <ol>
+                    ${recipe.instructions.map(instruction => `<li>${instruction}</li>`).join('')}
+                </ol>
+            </div>
+            <div class="recipe-nutrition">
+                <h3>Nutrition Information (per serving)</h3>
+                <table class="nutrition-table">
+                    <tr>
+                        <th>Calories</th>
+                        <td>${recipe.nutrition.calories}</td>
+                    </tr>
+                    <tr>
+                        <th>Protein</th>
+                        <td>${recipe.nutrition.protein}</td>
+                    </tr>
+                    <tr>
+                        <th>Carbohydrates</th>
+                        <td>${recipe.nutrition.carbs}</td>
+                    </tr>
+                    <tr>
+                        <th>Fat</th>
+                        <td>${recipe.nutrition.fat}</td>
+                    </tr>
+                    <tr>
+                        <th>Fiber</th>
+                        <td>${recipe.nutrition.fiber}</td>
+                    </tr>
+                </table>
+            </div>
+        `;
+        modal.style.display = 'block';
+    };
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
     }
-});
-
-// Add event listeners for search and filter
-if (searchInput) {
-    searchInput.addEventListener('input', filterRecipes);
-}
-
-if (categoryFilter) {
-    categoryFilter.addEventListener('change', filterRecipes);
-}
-
-// Initial display
-displayRecipes(recipesData);
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    if (searchInput) {
+        searchInput.addEventListener('input', filterRecipes);
+    }
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', filterRecipes);
+    }
+    displayRecipes(recipesData);
 }
 
 // ===== CALCULATOR PAGE FUNCTIONALITY =====
 
 function initCalculatorPage() {
-const calculatorForm = document.getElementById('calculatorForm');
-const resultsSection = document.getElementById('results');
-const suggestionsSection = document.getElementById('suggestionsSection');
-const suggestionText = document.getElementById('suggestionText');
-
-if (!calculatorForm || !resultsSection) return;
-
-calculatorForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form values
-    const age = parseInt(document.getElementById('age').value);
-    const gender = document.getElementById('gender').value;
-    const height = parseInt(document.getElementById('height').value);
-    const weight = parseFloat(document.getElementById('weight').value);
-    const activity = parseFloat(document.getElementById('activity').value);
-    
-    // Validate inputs
-    if (!age || !gender || !height || !weight || !activity) {
-        alert('Please fill in all fields');
-        return;
-    }
-    
-    // Calculate BMR (Basal Metabolic Rate)
-    let bmr;
-    if (gender === 'male') {
-        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-    } else {
-        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-    }
-    
-    // Calculate TDEE (Total Daily Energy Expenditure)
-    const tdee = bmr * activity;
-    
-    // Calculate macronutrients (based on 50% carbs, 20% protein, 30% fat)
-    const carbsGrams = Math.round((tdee * 0.5) / 4); // 4 calories per gram
-    const proteinGrams = Math.round((tdee * 0.2) / 4); // 4 calories per gram
-    const fatGrams = Math.round((tdee * 0.3) / 9); // 9 calories per gram
-    
-    // Display results with animations
-    animateNumber(document.getElementById('bmrValue'), Math.round(bmr));
-    animateNumber(document.getElementById('tdeeValue'), Math.round(tdee));
-    
-    document.getElementById('carbsValue').textContent = `${carbsGrams}g`;
-    document.getElementById('proteinValue').textContent = `${proteinGrams}g`;
-    document.getElementById('fatValue').textContent = `${fatGrams}g`;
-    
-    // Animate progress bars
-    setTimeout(() => {
-        document.getElementById('carbsBar').style.width = '100%';
-        document.getElementById('proteinBar').style.width = '100%';
-        document.getElementById('fatBar').style.width = '100%';
-    }, 500);
-    
-    // Show results section
-    resultsSection.style.display = 'block';
-    resultsSection.scrollIntoView({ behavior: 'smooth' });
-    
-    // Save calculation to history
-    const calculationHistory = loadFromStorage('calculatorHistory', []);
-    calculationHistory.unshift({
-        date: new Date().toISOString(),
-        bmr: Math.round(bmr),
-        tdee: Math.round(tdee),
-        macros: { carbs: carbsGrams, protein: proteinGrams, fat: fatGrams }
+    const calculatorForm = document.getElementById('calculatorForm');
+    const resultsSection = document.getElementById('results');
+    const suggestionsSection = document.getElementById('suggestionsSection');
+    const suggestionText = document.getElementById('suggestionText');
+    if (!calculatorForm || !resultsSection) return;
+    calculatorForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const age = parseInt(document.getElementById('age').value);
+        const gender = document.getElementById('gender').value;
+        const height = parseInt(document.getElementById('height').value);
+        const weight = parseFloat(document.getElementById('weight').value);
+        const activity = parseFloat(document.getElementById('activity').value);
+        if (!age || !gender || !height || !weight || !activity) {
+            alert('Please fill in all fields');
+            return;
+        }
+        let bmr;
+        if (gender === 'male') {
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+        } else {
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+        }
+        const tdee = bmr * activity;
+        const carbsGrams = Math.round((tdee * 0.5) / 4);
+        const proteinGrams = Math.round((tdee * 0.2) / 4);
+        const fatGrams = Math.round((tdee * 0.3) / 9);
+        animateNumber(document.getElementById('bmrValue'), Math.round(bmr));
+        animateNumber(document.getElementById('tdeeValue'), Math.round(tdee));
+        document.getElementById('carbsValue').textContent = `${carbsGrams}g`;
+        document.getElementById('proteinValue').textContent = `${proteinGrams}g`;
+        document.getElementById('fatValue').textContent = `${fatGrams}g`;
+        setTimeout(() => {
+            document.getElementById('carbsBar').style.width = '100%';
+            document.getElementById('proteinBar').style.width = '100%';
+            document.getElementById('fatBar').style.width = '100%';
+        }, 500);
+        resultsSection.style.display = 'block';
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+        const calculationHistory = loadFromStorage('calculatorHistory', []);
+        calculationHistory.unshift({
+            date: new Date().toISOString(),
+            bmr: Math.round(bmr),
+            tdee: Math.round(tdee),
+            macros: { carbs: carbsGrams, protein: proteinGrams, fat: fatGrams }
+        });
+        if (calculationHistory.length > 10) {
+            calculationHistory.pop();
+        }
+        saveToStorage('calculatorHistory', calculationHistory);
+        let suggestion = '';
+        if (tdee < 1600) {
+            suggestion = "Your calorie needs are on the lower side. Focus on nutrient-dense foods and avoid skipping meals.";
+        } else if (tdee < 2200) {
+            suggestion = "You have moderate calorie needs. Maintain a balanced diet with plenty of vegetables, lean proteins, and whole grains.";
+        } else if (tdee < 2800) {
+            suggestion = "Your calorie needs are above average. Ensure you get enough protein and healthy fats to support your activity level.";
+        } else {
+            suggestion = "You have high calorie needs. Consider consulting a nutritionist for a personalized plan, especially if you have specific fitness goals.";
+        }
+        suggestionText.textContent = suggestion;
+        suggestionsSection.style.display = 'block';
     });
-    
-    // Keep only last 10 calculations
-    if (calculationHistory.length > 10) {
-        calculationHistory.pop();
-    }
-    
-    saveToStorage('calculatorHistory', calculationHistory);
-
-    // Suggestion logic based on TDEE
-    let suggestion = '';
-    if (tdee < 1600) {
-        suggestion = "Your calorie needs are on the lower side. Focus on nutrient-dense foods and avoid skipping meals.";
-    } else if (tdee < 2200) {
-        suggestion = "You have moderate calorie needs. Maintain a balanced diet with plenty of vegetables, lean proteins, and whole grains.";
-    } else if (tdee < 2800) {
-        suggestion = "Your calorie needs are above average. Ensure you get enough protein and healthy fats to support your activity level.";
-    } else {
-        suggestion = "You have high calorie needs. Consider consulting a nutritionist for a personalized plan, especially if you have specific fitness goals.";
-    }
-
-    suggestionText.textContent = suggestion;
-    suggestionsSection.style.display = 'block';
-});
 }
 
 // ===== WORKOUT PAGE FUNCTIONALITY =====
 
 function initWorkoutPage() {
-const workoutForm = document.getElementById('workoutForm');
-const workoutPlan = document.getElementById('workoutPlan');
-const exerciseList = document.getElementById('exerciseList');
-const timerSection = document.getElementById('timerSection');
-const currentExercise = document.getElementById('currentExercise');
-const timerText = document.getElementById('timerText');
-const timerProgress = document.getElementById('timerProgress');
-const startTimer = document.getElementById('startTimer');
-const pauseTimer = document.getElementById('pauseTimer');
-const resetTimer = document.getElementById('resetTimer');
-const nextExercise = document.getElementById('nextExercise');
-
-let currentExercises = [];
-let currentExerciseIndex = 0;
-let timerSeconds = 60;
-let timerInterval = null;
-
-if (!workoutForm) return;
-
-workoutForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get selected body parts
-    const selectedBodyParts = Array.from(
-        document.querySelectorAll('input[name="bodyPart"]:checked')
-    ).map(input => input.value);
-    
-    // Get equipment
-    const equipment = document.getElementById('equipment').value;
-    
-    if (selectedBodyParts.length === 0 || !equipment) {
-        alert('Please select at least one body part and equipment type');
-        return;
-    }
-    
-    // Generate workout exercises
-    currentExercises = [];
-    selectedBodyParts.forEach(part => {
-        const exercises = workoutExercises[part]?.[equipment] || [];
-        exercises.forEach(exercise => {
-            currentExercises.push({
-                name: exercise,
-                duration: 60 // 60 seconds per exercise
-            });
-        });
-    });
-    
-    // Shuffle exercises for variety
-    currentExercises = currentExercises.sort(() => Math.random() - 0.5);
-    
-    // Display workout plan
-    exerciseList.innerHTML = currentExercises.map((exercise, index) => `
-        <div class="exercise-item">
-            <div class="exercise-name">${index + 1}. ${exercise.name}</div>
-            <div class="exercise-details">Duration: ${exercise.duration} seconds</div>
-            <div class="exercise-description">${exerciseDescriptions[exercise.name] || ''}</div>
-        </div>
-    `).join('');
-    
-    workoutPlan.style.display = 'block';
-    timerSection.style.display = 'block';
-    
-    // Reset timer
-    currentExerciseIndex = 0;
-    updateTimerDisplay();
-    workoutPlan.scrollIntoView({ behavior: 'smooth' });
-});
-
-// Timer functionality
-function updateTimerDisplay() {
-    if (currentExercises.length === 0) return;
-    
-    const exercise = currentExercises[currentExerciseIndex];
-    currentExercise.textContent = `${currentExerciseIndex + 1}. ${exercise.name}`;
-    timerSeconds = exercise.duration;
-    timerText.textContent = formatTime(timerSeconds);
-    
-    // Reset progress circle
-    const circumference = 2 * Math.PI * 90;
-    timerProgress.style.strokeDashoffset = circumference;
-}
-
-function startWorkoutTimer() {
-    if (timerInterval) clearInterval(timerInterval);
-    
-    const circumference = 2 * Math.PI * 90;
-    let remaining = timerSeconds;
-    
-    timerInterval = setInterval(() => {
-        remaining--;
-        
-        if (remaining <= 0) {
-            clearInterval(timerInterval);
-            timerText.textContent = '00:00';
-            
-            // Auto-advance to next exercise after 2 seconds
-            setTimeout(() => {
-                if (currentExerciseIndex < currentExercises.length - 1) {
-                    currentExerciseIndex++;
-                    updateTimerDisplay();
-                    startWorkoutTimer();
-                } else {
-                    // Workout complete
-                    alert('Workout complete! Great job!');
-                    resetWorkoutTimer();
-                }
-            }, 2000);
-            
+    const workoutForm = document.getElementById('workoutForm');
+    const workoutPlan = document.getElementById('workoutPlan');
+    const exerciseList = document.getElementById('exerciseList');
+    const timerSection = document.getElementById('timerSection');
+    const currentExercise = document.getElementById('currentExercise');
+    const timerText = document.getElementById('timerText');
+    const timerProgress = document.getElementById('timerProgress');
+    const startTimer = document.getElementById('startTimer');
+    const pauseTimer = document.getElementById('pauseTimer');
+    const resetTimer = document.getElementById('resetTimer');
+    const nextExercise = document.getElementById('nextExercise');
+    let currentExercises = [];
+    let currentExerciseIndex = 0;
+    let timerSeconds = 60;
+    let timerInterval = null;
+    if (!workoutForm) return;
+    workoutForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const selectedBodyParts = Array.from(
+            document.querySelectorAll('input[name="bodyPart"]:checked')
+        ).map(input => input.value);
+        const equipment = document.getElementById('equipment').value;
+        if (selectedBodyParts.length === 0 || !equipment) {
+            alert('Please select at least one body part and equipment type');
             return;
         }
-        
-        timerText.textContent = formatTime(remaining);
-        
-        // Update progress circle
-        const offset = circumference - (remaining / timerSeconds) * circumference;
-        timerProgress.style.strokeDashoffset = offset;
-    }, 1000);
-    
-    startTimer.style.display = 'none';
-    pauseTimer.style.display = 'inline-block';
-}
-
-function pauseWorkoutTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
+        currentExercises = [];
+        selectedBodyParts.forEach(part => {
+            const exercises = workoutExercises[part]?.[equipment] || [];
+            exercises.forEach(exercise => {
+                currentExercises.push({
+                    name: exercise,
+                    duration: 60
+                });
+            });
+        });
+        currentExercises = currentExercises.sort(() => Math.random() - 0.5);
+        exerciseList.innerHTML = currentExercises.map((exercise, index) => `
+            <div class="exercise-item">
+                <div class="exercise-name">${index + 1}. ${exercise.name}</div>
+                <div class="exercise-details">Duration: ${exercise.duration} seconds</div>
+                <div class="exercise-description">${exerciseDescriptions[exercise.name] || ''}</div>
+            </div>
+        `).join('');
+        workoutPlan.style.display = 'block';
+        timerSection.style.display = 'block';
+        currentExerciseIndex = 0;
+        updateTimerDisplay();
+        workoutPlan.scrollIntoView({ behavior: 'smooth' });
+    });
+    function updateTimerDisplay() {
+        if (currentExercises.length === 0) return;
+        const exercise = currentExercises[currentExerciseIndex];
+        currentExercise.textContent = `${currentExerciseIndex + 1}. ${exercise.name}`;
+        timerSeconds = exercise.duration;
+        timerText.textContent = formatTime(timerSeconds);
+        const circumference = 2 * Math.PI * 90;
+        timerProgress.style.strokeDashoffset = circumference;
+    }
+    function startWorkoutTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        const circumference = 2 * Math.PI * 90;
+        let remaining = timerSeconds;
+        timerInterval = setInterval(() => {
+            remaining--;
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                timerText.textContent = '00:00';
+                setTimeout(() => {
+                    if (currentExerciseIndex < currentExercises.length - 1) {
+                        currentExerciseIndex++;
+                        updateTimerDisplay();
+                        startWorkoutTimer();
+                    } else {
+                        alert('Workout complete! Great job!');
+                        resetWorkoutTimer();
+                    }
+                }, 2000);
+                return;
+            }
+            timerText.textContent = formatTime(remaining);
+            const offset = circumference - (remaining / timerSeconds) * circumference;
+            timerProgress.style.strokeDashoffset = offset;
+        }, 1000);
+        startTimer.style.display = 'none';
+        pauseTimer.style.display = 'inline-block';
+    }
+    function pauseWorkoutTimer() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            startTimer.style.display = 'inline-block';
+            pauseTimer.style.display = 'none';
+        }
+    }
+    function resetWorkoutTimer() {
+        pauseWorkoutTimer();
+        currentExerciseIndex = 0;
+        updateTimerDisplay();
         startTimer.style.display = 'inline-block';
         pauseTimer.style.display = 'none';
     }
-}
-
-function resetWorkoutTimer() {
-    pauseWorkoutTimer();
-    currentExerciseIndex = 0;
-    updateTimerDisplay();
-    startTimer.style.display = 'inline-block';
-    pauseTimer.style.display = 'none';
-}
-
-function nextWorkoutExercise() {
-    if (currentExerciseIndex < currentExercises.length - 1) {
-        currentExerciseIndex++;
-        updateTimerDisplay();
-        pauseWorkoutTimer();
+    function nextWorkoutExercise() {
+        if (currentExerciseIndex < currentExercises.length - 1) {
+            currentExerciseIndex++;
+            updateTimerDisplay();
+            pauseWorkoutTimer();
+        }
     }
-}
-
-// Add event listeners for timer controls
-if (startTimer) startTimer.addEventListener('click', startWorkoutTimer);
-if (pauseTimer) pauseTimer.addEventListener('click', pauseWorkoutTimer);
-if (resetTimer) resetTimer.addEventListener('click', resetWorkoutTimer);
-if (nextExercise) nextExercise.addEventListener('click', nextWorkoutExercise);
+    if (startTimer) startTimer.addEventListener('click', startWorkoutTimer);
+    if (pauseTimer) pauseTimer.addEventListener('click', pauseWorkoutTimer);
+    if (resetTimer) resetTimer.addEventListener('click', resetWorkoutTimer);
+    if (nextExercise) nextExercise.addEventListener('click', nextWorkoutExercise);
 }
 
 // ===== MINDFULNESS PAGE FUNCTIONALITY =====
 
 function initMindfulnessPage() {
-const breathingCircle = document.getElementById('breathingCircle');
-const breathingText = document.getElementById('breathingText');
-const breathingToggle = document.getElementById('breathingToggle');
-const timeOptions = document.querySelectorAll('.time-option');
-const meditationTime = document.getElementById('meditationTime');
-const meditationStart = document.getElementById('meditationStart');
-const meditationPause = document.getElementById('meditationPause');
-const meditationReset = document.getElementById('meditationReset');
-const soundButtons = document.querySelectorAll('.sound-button');
-const soundStatus = document.getElementById('soundStatus');
-const totalSessions = document.getElementById('totalSessions');
-const totalMinutes = document.getElementById('totalMinutes');
-const currentStreak = document.getElementById('currentStreak');
-
-let breathingActive = false;
-let meditationSeconds = 300; // 5 minutes default
-let meditationInterval = null;
-let meditationRunning = false;
-let selectedTimeOption = null;
-
-// Breathing exercise
-if (breathingToggle && breathingCircle && breathingText) {
-    breathingToggle.addEventListener('click', () => {
-        breathingActive = !breathingActive;
-        
-        if (breathingActive) {
-            breathingToggle.textContent = 'Stop Breathing Exercise';
-            breathingCircle.classList.add('inhale');
-            breathingText.textContent = 'Inhale';
-            
-            // Breathing cycle: 4s inhale, 4s exhale
-            breathingTimer = setInterval(() => {
-                if (breathingCircle.classList.contains('inhale')) {
-                    breathingCircle.classList.remove('inhale');
-                    breathingCircle.classList.add('exhale');
-                    breathingText.textContent = 'Exhale';
-                } else {
-                    breathingCircle.classList.remove('exhale');
-                    breathingCircle.classList.add('inhale');
-                    breathingText.textContent = 'Inhale';
-                }
-            }, 4000);
-            
-            // Track session
-            trackMindfulnessSession(4); // 4 minutes for breathing exercise
-        } else {
-            breathingToggle.textContent = 'Start Breathing Exercise';
-            breathingCircle.classList.remove('inhale', 'exhale');
-            breathingText.textContent = 'Click to Start';
-            clearInterval(breathingTimer);
-        }
-    });
-}
-
-// Meditation timer
-if (timeOptions && meditationTime) {
-    timeOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            // Remove active class from all options
-            timeOptions.forEach(opt => opt.classList.remove('active'));
-            
-            // Add active class to clicked option
-            option.classList.add('active');
-            selectedTimeOption = option;
-            
-            // Set meditation time
-            meditationSeconds = parseInt(option.dataset.time);
-            meditationTime.textContent = formatTime(meditationSeconds);
+    const breathingCircle = document.getElementById('breathingCircle');
+    const breathingText = document.getElementById('breathingText');
+    const breathingToggle = document.getElementById('breathingToggle');
+    const timeOptions = document.querySelectorAll('.time-option');
+    const meditationTime = document.getElementById('meditationTime');
+    const meditationStart = document.getElementById('meditationStart');
+    const meditationPause = document.getElementById('meditationPause');
+    const meditationReset = document.getElementById('meditationReset');
+    const soundButtons = document.querySelectorAll('.sound-button');
+    const soundStatus = document.getElementById('soundStatus');
+    const totalSessions = document.getElementById('totalSessions');
+    const totalMinutes = document.getElementById('totalMinutes');
+    const currentStreak = document.getElementById('currentStreak');
+    let breathingActive = false;
+    let meditationSeconds = 300;
+    let meditationInterval = null;
+    let meditationRunning = false;
+    let selectedTimeOption = null;
+    if (breathingToggle && breathingCircle && breathingText) {
+        breathingToggle.addEventListener('click', () => {
+            breathingActive = !breathingActive;
+            if (breathingActive) {
+                breathingToggle.textContent = 'Stop Breathing Exercise';
+                breathingCircle.classList.add('inhale');
+                breathingText.textContent = 'Inhale';
+                breathingTimer = setInterval(() => {
+                    if (breathingCircle.classList.contains('inhale')) {
+                        breathingCircle.classList.remove('inhale');
+                        breathingCircle.classList.add('exhale');
+                        breathingText.textContent = 'Exhale';
+                    } else {
+                        breathingCircle.classList.remove('exhale');
+                        breathingCircle.classList.add('inhale');
+                        breathingText.textContent = 'Inhale';
+                    }
+                }, 4000);
+                trackMindfulnessSession(4);
+            } else {
+                breathingToggle.textContent = 'Start Breathing Exercise';
+                breathingCircle.classList.remove('inhale', 'exhale');
+                breathingText.textContent = 'Click to Start';
+                clearInterval(breathingTimer);
+            }
         });
-    });
-    
-    // Set default to 5 minutes
-    if (timeOptions[0]) {
-        timeOptions[0].click();
     }
-}
-
-function startMeditation() {
-    if (meditationRunning) return;
-    
-    meditationRunning = true;
-    meditationStart.style.display = 'none';
-    meditationPause.style.display = 'inline-block';
-    
-    let remaining = meditationSeconds;
-    meditationTime.textContent = formatTime(remaining);
-    
-    meditationInterval = setInterval(() => {
-        remaining--;
-        
-        if (remaining <= 0) {
-            clearInterval(meditationInterval);
-            meditationTime.textContent = '00:00';
-            meditationRunning = false;
-            meditationStart.style.display = 'inline-block';
-            meditationPause.style.display = 'none';
-            
-            // Track session
-            trackMindfulnessSession(meditationSeconds / 60);
-            
-            // Play completion sound
-            const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
-            audio.play();
-            
-            return;
+    if (timeOptions && meditationTime) {
+        timeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                timeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                selectedTimeOption = option;
+                meditationSeconds = parseInt(option.dataset.time);
+                meditationTime.textContent = formatTime(meditationSeconds);
+            });
+        });
+        if (timeOptions[0]) {
+            timeOptions[0].click();
         }
-        
+    }
+    function startMeditation() {
+        if (meditationRunning) return;
+        meditationRunning = true;
+        meditationStart.style.display = 'none';
+        meditationPause.style.display = 'inline-block';
+        let remaining = meditationSeconds;
         meditationTime.textContent = formatTime(remaining);
-    }, 1000);
-}
-
-function pauseMeditation() {
-    if (!meditationRunning) return;
-    
-    clearInterval(meditationInterval);
-    meditationRunning = false;
-    meditationStart.style.display = 'inline-block';
-    meditationPause.style.display = 'none';
-}
-
-function resetMeditation() {
-    pauseMeditation();
-    meditationTime.textContent = formatTime(meditationSeconds);
-}
-
-if (meditationStart) meditationStart.addEventListener('click', startMeditation);
-if (meditationPause) meditationPause.addEventListener('click', pauseMeditation);
-if (meditationReset) meditationReset.addEventListener('click', resetMeditation);
-
-// Ambient sounds
-if (soundButtons && soundStatus) {
-    soundButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const sound = button.dataset.sound;
-            const audioPath = `audio/${sound}.mp3`;
-
-            // If this button is already playing, stop it
-            if (button.classList.contains('playing')) {
+        meditationInterval = setInterval(() => {
+            remaining--;
+            if (remaining <= 0) {
+                clearInterval(meditationInterval);
+                meditationTime.textContent = '00:00';
+                meditationRunning = false;
+                meditationStart.style.display = 'inline-block';
+                meditationPause.style.display = 'none';
+                trackMindfulnessSession(meditationSeconds / 60);
+                const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
+                audio.play();
+                return;
+            }
+            meditationTime.textContent = formatTime(remaining);
+        }, 1000);
+    }
+    function pauseMeditation() {
+        if (!meditationRunning) return;
+        clearInterval(meditationInterval);
+        meditationRunning = false;
+        meditationStart.style.display = 'inline-block';
+        meditationPause.style.display = 'none';
+    }
+    function resetMeditation() {
+        pauseMeditation();
+        meditationTime.textContent = formatTime(meditationSeconds);
+    }
+    if (meditationStart) meditationStart.addEventListener('click', startMeditation);
+    if (meditationPause) meditationPause.addEventListener('click', pauseMeditation);
+    if (meditationReset) meditationReset.addEventListener('click', resetMeditation);
+    if (soundButtons && soundStatus) {
+        soundButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const sound = button.dataset.sound;
+                const audioPath = `audio/${sound}.mp3`;
+                if (button.classList.contains('playing')) {
+                    if (currentSound) {
+                        currentSound.pause();
+                        currentSound.currentTime = 0;
+                        currentSound = null;
+                    }
+                    soundButtons.forEach(btn => btn.classList.remove('playing'));
+                    soundStatus.textContent = 'Sound stopped';
+                    return;
+                }
                 if (currentSound) {
                     currentSound.pause();
                     currentSound.currentTime = 0;
                     currentSound = null;
+                    soundButtons.forEach(btn => btn.classList.remove('playing'));
                 }
-                soundButtons.forEach(btn => btn.classList.remove('playing'));
-                soundStatus.textContent = 'Sound stopped';
-                return;
-            }
-
-            // Stop any other sound
-            if (currentSound) {
-                currentSound.pause();
-                currentSound.currentTime = 0;
-                currentSound = null;
-                soundButtons.forEach(btn => btn.classList.remove('playing'));
-            }
-
-            // Play new sound
-            try {
-                const audio = new Audio(audioPath);
-                audio.loop = true;
-                audio.volume = 0.5;
-                audio.play();
-                currentSound = audio;
-                button.classList.add('playing');
-                soundStatus.textContent = `Playing ${sound} sounds...`;
-            } catch (error) {
-                console.error('Error playing sound:', error);
-                soundStatus.textContent = 'Error playing sound. Please try again.';
-            }
+                try {
+                    const audio = new Audio(audioPath);
+                    audio.loop = true;
+                    audio.volume = 0.5;
+                    audio.play();
+                    currentSound = audio;
+                    button.classList.add('playing');
+                    soundStatus.textContent = `Playing ${sound} sounds...`;
+                } catch (error) {
+                    console.error('Error playing sound:', error);
+                    soundStatus.textContent = 'Error playing sound. Please try again.';
+                }
+            });
         });
-    });
-}
-
-// Session tracking
-function trackMindfulnessSession(minutes) {
-    const today = new Date().toDateString();
-    const sessions = loadFromStorage('mindfulnessSessions', []);
-    
-    // Add new session
-    sessions.push({
-        date: today,
-        minutes: minutes,
-        type: minutes === 4 ? 'breathing' : 'meditation'
-    });
-    
-    saveToStorage('mindfulnessSessions', sessions);
-    updateSessionStats();
-}
-
-function updateSessionStats() {
-    const sessions = loadFromStorage('mindfulnessSessions', []);
-    
-    // Total sessions
-    totalSessions.textContent = sessions.length;
-    
-    // Total minutes
-    const totalMins = sessions.reduce((sum, session) => sum + session.minutes, 0);
-    totalMinutes.textContent = totalMins;
-    
-    // Current streak (consecutive days with at least one session)
-    let streak = 0;
-    const today = new Date();
-    let checkDate = new Date(today);
-    
-    while (true) {
-        const dateStr = checkDate.toDateString();
-        const hasSession = sessions.some(session => session.date === dateStr);
-        
-        if (hasSession) {
-            streak++;
-            checkDate.setDate(checkDate.getDate() - 1);
-        } else {
-            break;
-        }
     }
-    
-    currentStreak.textContent = streak;
-}
-
-// Initialize session stats
-updateSessionStats();
+    function trackMindfulnessSession(minutes) {
+        const today = new Date().toDateString();
+        const sessions = loadFromStorage('mindfulnessSessions', []);
+        sessions.push({
+            date: today,
+            minutes: minutes,
+            type: minutes === 4 ? 'breathing' : 'meditation'
+        });
+        saveToStorage('mindfulnessSessions', sessions);
+        updateSessionStats();
+    }
+    function updateSessionStats() {
+        const sessions = loadFromStorage('mindfulnessSessions', []);
+        totalSessions.textContent = sessions.length;
+        const totalMins = sessions.reduce((sum, session) => sum + session.minutes, 0);
+        totalMinutes.textContent = totalMins;
+        let streak = 0;
+        const today = new Date();
+        let checkDate = new Date(today);
+        while (true) {
+            const dateStr = checkDate.toDateString();
+            const hasSession = sessions.some(session => session.date === dateStr);
+            if (hasSession) {
+                streak++;
+                checkDate.setDate(checkDate.getDate() - 1);
+            } else {
+                break;
+            }
+        }
+        currentStreak.textContent = streak;
+    }
+    updateSessionStats();
 }
 
 // ===== CONTACT PAGE FUNCTIONALITY =====
 
 function initContactPage() {
-const contactForm = document.getElementById('contactForm');
-const formMessage = document.getElementById('formMessage');
-const faqQuestions = document.querySelectorAll('.faq-question');
-
-// Contact form submission
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        
-        // Validate form
-        let isValid = true;
-        
-        if (!name) {
-            document.getElementById('nameError').textContent = 'Name is required';
-            isValid = false;
-        } else {
-            document.getElementById('nameError').textContent = '';
-        }
-        
-        if (!email) {
-            document.getElementById('emailError').textContent = 'Email is required';
-            isValid = false;
-        } else if (!isValidEmail(email)) {
-            document.getElementById('emailError').textContent = 'Please enter a valid email';
-            isValid = false;
-        } else {
-            document.getElementById('emailError').textContent = '';
-        }
-        
-        if (!message) {
-            document.getElementById('messageError').textContent = 'Message is required';
-            isValid = false;
-        } else {
-            document.getElementById('messageError').textContent = '';
-        }
-        
-        if (!isValid) return;
-        
-        // Simulate form submission
-        contactForm.classList.add('loading');
-        
-        setTimeout(() => {
-            // Save message to localStorage
-            const messages = loadFromStorage('contactMessages', []);
-            messages.push({
-                name: name,
-                email: email,
-                message: message,
-                date: new Date().toISOString()
-            });
-            
-            saveToStorage('contactMessages', messages);
-            
-            // Show success message
-            formMessage.textContent = 'Thank you for your message! We\'ll get back to you soon.';
-            formMessage.className = 'form-message success';
-            
-            // Reset form
-            contactForm.reset();
-            contactForm.classList.remove('loading');
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                formMessage.textContent = '';
-                formMessage.className = 'form-message';
-            }, 5000);
-        }, 1500);
-    });
-}
-
-// FAQ functionality
-if (faqQuestions) {
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            const toggle = question.querySelector('.faq-toggle');
-            
-            // Toggle active class
-            question.classList.toggle('active');
-            answer.classList.toggle('active');
-            
-            // Update toggle symbol
-            if (question.classList.contains('active')) {
-                toggle.textContent = '−';
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            let isValid = true;
+            if (!name) {
+                document.getElementById('nameError').textContent = 'Name is required';
+                isValid = false;
             } else {
-                toggle.textContent = '+';
+                document.getElementById('nameError').textContent = '';
             }
-            
-            // Close other FAQs
-            faqQuestions.forEach(otherQuestion => {
-                if (otherQuestion !== question && otherQuestion.classList.contains('active')) {
-                    otherQuestion.classList.remove('active');
-                    otherQuestion.nextElementSibling.classList.remove('active');
-                    otherQuestion.querySelector('.faq-toggle').textContent = '+';
+            if (!email) {
+                document.getElementById('emailError').textContent = 'Email is required';
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+            if (!message) {
+                document.getElementById('messageError').textContent = 'Message is required';
+                isValid = false;
+            } else {
+                document.getElementById('messageError').textContent = '';
+            }
+            if (!isValid) return;
+            contactForm.classList.add('loading');
+            setTimeout(() => {
+                const messages = loadFromStorage('contactMessages', []);
+                messages.push({
+                    name: name,
+                    email: email,
+                    message: message,
+                    date: new Date().toISOString()
+                });
+                saveToStorage('contactMessages', messages);
+                formMessage.textContent = 'Thank you for your message! We\'ll get back to you soon.';
+                formMessage.className = 'form-message success';
+                contactForm.reset();
+                contactForm.classList.remove('loading');
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                    formMessage.className = 'form-message';
+                }, 5000);
+            }, 1500);
+        });
+    }
+    if (faqQuestions) {
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const toggle = question.querySelector('.faq-toggle');
+                question.classList.toggle('active');
+                answer.classList.toggle('active');
+                if (question.classList.contains('active')) {
+                    toggle.textContent = '−';
+                } else {
+                    toggle.textContent = '+';
                 }
+                faqQuestions.forEach(otherQuestion => {
+                    if (otherQuestion !== question && otherQuestion.classList.contains('active')) {
+                        otherQuestion.classList.remove('active');
+                        otherQuestion.nextElementSibling.classList.remove('active');
+                        otherQuestion.querySelector('.faq-toggle').textContent = '+';
+                    }
+                });
             });
         });
-    });
-}
+    }
 }
 
 // ===== INITIALIZATION =====
 
 document.addEventListener('DOMContentLoaded', function() {
-// Get current page
-currentPage = getCurrentPage();
-
-// Initialize navigation
-initNavigation();
-
-// Initialize page-specific functionality
-switch(currentPage) {
-    case 'home':
-    case 'index':
-        initHomePage();
-        break;
-    case 'recipes':
-        initRecipesPage();
-        break;
-    case 'calculator':
-        initCalculatorPage();
-        break;
-    case 'workout':
-        initWorkoutPage();
-        break;
-    case 'mindfulness':
-        initMindfulnessPage();
-        break;
-    case 'contact':
-        initContactPage();
-        break;
-}
-
-// Add loading animation to all buttons
-document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', function() {
-        if (this.type === 'submit' || this.classList.contains('submit-button')) {
-            this.classList.add('loading');
-            
-            // Remove loading class after operation completes
-            setTimeout(() => {
-                this.classList.remove('loading');
-            }, 2000);
-        }
-    });
-});
-
-// Add smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Add intersection observer for animations
-if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in');
+    currentPage = getCurrentPage();
+    initNavigation();
+    switch(currentPage) {
+        case 'home':
+        case 'index':
+            initHomePage();
+            break;
+        case 'recipes':
+            initRecipesPage();
+            break;
+        case 'calculator':
+            initCalculatorPage();
+            break;
+        case 'workout':
+            initWorkoutPage();
+            break;
+        case 'mindfulness':
+            initMindfulnessPage();
+            break;
+        case 'contact':
+            initContactPage();
+            break;
+    }
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.type === 'submit' || this.classList.contains('submit-button')) {
+                this.classList.add('loading');
+                setTimeout(() => {
+                    this.classList.remove('loading');
+                }, 2000);
             }
         });
-    }, {
-        threshold: 0.1
     });
-    
-    // Observe all sections and cards
-    document.querySelectorAll('section, .card, .feature-card').forEach(el => {
-        observer.observe(el);
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
-}
-
-console.log(`GreenBite ${currentPage} page initialized successfully!`);
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        document.querySelectorAll('section, .card, .feature-card').forEach(el => {
+            observer.observe(el);
+        });
+    }
+    console.log(`GreenBite ${currentPage} page initialized successfully!`);
 });
 
 // Register service worker for PWA
