@@ -195,14 +195,17 @@ body {
     color: #ffffff;
     text-align: center;
     margin-top: 150px;
+    font-weight: bold;
+    
 }
 
 .hero-welcome {
     font-size: 1.9rem;
-    color: #fffefe;
+    color: #ffffff;
     margin-bottom: 0.5rem;
     font-weight: normal;
     text-align: left;
+    font-weight: bold;
 }
 
 .hero-main-title {
