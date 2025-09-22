@@ -1675,18 +1675,46 @@ contact-details p {
         gap: var(--spacing-sm);
         align-items: stretch;
     }
+}
+
+/* Tablet view */
+@media screen and (max-width: 768px) {
     .search-input,
     .category-filter {
-        max-width: 100%;
-        width: 100%;
-        min-width: 0;
-        font-size: 1rem;
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        margin-bottom: var(--spacing-sm);
-        box-sizing: border-box;
-        height: auto;
+        display: inline-block;
+        width: 45% !important;       /* two side by side */
+        max-width: 45% !important;
+        font-size: 0.85rem !important;
+        padding: 0.3rem 0.5rem !important;
+        height: 35px !important;     /* small like a button */
+        text-align: center !important;
+        margin: 0 2% 0 0 !important;
     }
+    .category-filter:last-child {
+        margin-right: 0 !important;
+    }
+}
+
+/* Mobile view */
+@media screen and (max-width: 480px) {
+    .search-input,
+    .category-filter {
+        display: inline-block;
+        width: 45% !important;       /* keep them on same line */
+        max-width: 45% !important;
+        font-size: 0.8rem !important;
+        padding: 0.2rem 0.4rem !important;
+        height: 30px !important;     /* extra small */
+        text-align: center !important;
+        margin: 0 2% 0 0 !important;
+    }
+    .category-filter:last-child {
+        margin-right: 0 !important;
+    }
+}
+
+/* Newsletter always full width */
+@media (max-width: 768px) {
     .newsletter-form input,
     .newsletter-form button {
         width: 100%;
@@ -1697,80 +1725,245 @@ contact-details p {
 @media (max-width: 480px) {
     .search-input,
     .category-filter {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.98rem;
+        padding: 0.15rem 0.3rem !important;
+        font-size: 0.75rem !important;
     }
 }
 
 /* For very small screens */
 @media (max-width: 480px) {
     .container {
-        padding: 0 4px;
+        padding: 0 2px;
     }
     .hero-content {
-        margin-top: 60px;
+        margin-top: 40px;
+        padding: 0 4px;
     }
     .hero-main-title {
-        font-size: 2rem;
+        font-size: 1.3rem;
     }
     .health-tips h2,
     .newsletter h2 {
-        font-size: 2rem;
+        font-size: 1.3rem;
     }
     .tip-card {
-        padding: 1rem;
+        padding: 0.5rem;
     }
     .featured h2 {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
     }
     .feature-card {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
     }
     .newsletter {
-        padding: 20px 4px;
+        padding: 10px 2px;
         height: auto;
     }
     .faq-section {
         width: 100%;
         margin-left: 0;
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
     }
     .modal-content {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
     }
     .calculator-page,
     .workout-page,
     .mindfulness-page,
     .recipes-page,
     .contact-page {
-        padding: var(--spacing-md) 0;
+        padding: var(--spacing-sm) 0;
         border-radius: 0;
         margin-left: 0;
         margin-right: 0;
     }
-}
-
-/* Ensure grids stack on small screens */
-@media (max-width: 650px) {
-    .feature-grid,
-    .session-stats,
-    .recipe-grid {
-        grid-template-columns: 1fr !important;
+    .calculator-container,
+    .workout-container,
+    .contact-container {
+        padding: var(--spacing-sm);
+        max-width: 100%;
     }
-    .footer-content {
-        grid-template-columns: 1fr;
+    .faq-section {
+        width: 100%;
+        margin-left: 0;
+        padding: var(--spacing-sm);
+    }
+    .mindfulness-section-breathing,
+    .mindfulness-section-timer,
+    .mindfulness-section-sounds,
+    .mindfulness-section-tracker {
+        padding: var(--spacing-sm);
+        min-width: 0;
+        max-width: 100%;
     }
     .mindfulness-sections-row {
         flex-direction: column;
-        gap: var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+        min-width: 0;
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .recipe-controls {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: stretch;
+    }
+    .search-input,
+    .category-filter {
+        max-width: 100%;
+        width: 100%;
+        min-width: 0;
+        font-size: 0.98rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        margin-bottom: var(--spacing-xs);
+        box-sizing: border-box;
+        height: auto;
+    }
+    .recipe-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0 2px;
+    }
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+    .footer {
+        padding: var(--spacing-lg) 0 var(--spacing-md);
+    }
+    .footer-bottom {
+        padding-top: var(--spacing-md);
+    }
+    .stat-card {
+        padding: var(--spacing-sm);
+    }
+    .modal-content {
+        margin: 10% 2%;
+        width: 96%;
     }
 }
 
-/* Make sure .container never overflows */
-.container {
-    width: 100%;
-    box-sizing: border-box;
-    overflow-x: hidden;
+/* --- IMPROVED MOBILE RESPONSIVENESS --- */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 2px;
+    }
+    .hero-content {
+        margin-top: 40px;
+        padding: 0 4px;
+    }
+    .hero-main-title {
+        font-size: 1.3rem;
+    }
+    .health-tips h2,
+    .newsletter h2 {
+        font-size: 1.3rem;
+    }
+    .tip-card {
+        padding: 0.5rem;
+    }
+    .featured h2 {
+        font-size: 1.1rem;
+    }
+    .feature-card {
+        padding: var(--spacing-sm);
+    }
+    .newsletter {
+        padding: 10px 2px;
+        height: auto;
+    }
+    .faq-section {
+        width: 100%;
+        margin-left: 0;
+        padding: var(--spacing-sm);
+    }
+    .modal-content {
+        padding: var(--spacing-sm);
+    }
+    .calculator-page,
+    .workout-page,
+    .mindfulness-page,
+    .recipes-page,
+    .contact-page {
+        padding: var(--spacing-sm) 0;
+        border-radius: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .calculator-container,
+    .workout-container,
+    .contact-container {
+        padding: var(--spacing-sm);
+        max-width: 100%;
+    }
+    .faq-section {
+        width: 100%;
+        margin-left: 0;
+        padding: var(--spacing-sm);
+    }
+    .mindfulness-section-breathing,
+    .mindfulness-section-timer,
+    .mindfulness-section-sounds,
+    .mindfulness-section-tracker {
+        padding: var(--spacing-sm);
+        min-width: 0;
+        max-width: 100%;
+    }
+    .mindfulness-sections-row {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+        min-width: 0;
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .recipe-controls {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: stretch;
+    }
+    .search-input,
+    .category-filter {
+        max-width: 100%;
+        width: 100%;
+        min-width: 0;
+        font-size: 0.98rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        margin-bottom: var(--spacing-xs);
+        box-sizing: border-box;
+        height: auto;
+    }
+    .recipe-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0 2px;
+    }
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+    .footer {
+        padding: var(--spacing-lg) 0 var(--spacing-md);
+    }
+    .footer-bottom {
+        padding-top: var(--spacing-md);
+    }
+    .stat-card {
+        padding: var(--spacing-sm);
+    }
+    .modal-content {
+        margin: 10% 2%;
+        width: 96%;
+    }
 }
 
 /* ===== UTILITY CLASSES ===== */
